@@ -1,0 +1,72 @@
+server:
+  port: 8005
+
+spring:
+  main:
+    # 解决Bean重复定义问题
+    allow-bean-definition-overriding: true
+
+#showSql
+logging:
+  config : classpath:config/log/log4j2.xml
+
+nacos:
+  discovery:
+    server-addr:127.0.0.1:8848
+
+dubbo:
+  # 配置服务信息
+  application:
+    id: business-provider
+    name: business-provider
+    # 禁用QOS同一台机器可能会有端口冲突现象
+    qos-enable: false
+    qos-accept-foreign-ip: false
+  # 配置注册中心
+  registry:
+    id: business-registry
+    address: nacos://127.0.0.1:8848
+  # 设置协议-协议由提供方指定消费方被动接受
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.kevin.demo.dubbo.service.impl
+  provider:
+    version: 1.0.0
+  consumer:
+    check: false
+
+seata:
+  enabled: true
+  application-id: kevin-demo-business-seata
+  tx-service-group: kevin-demo-group
+  enable-auto-data-source-proxy: true
+  service:
+    vgroupMapping:
+      kevin-demo-group: "default"
+    grouplist:
+      - localhost:8091
+      #- localhost:8092
+      #- xxxxxxx.8093
+  config:
+    type: nacos
+    #file:
+    #  name: file.conf 【namespace: seata-config-1】
+    nacos:
+      namespace: "public"
+      serverAddr: localhost:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      #与seata server的registry.conf的nacos名字相同
+      application: seata-server
+      server-addr: localhost:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"
+

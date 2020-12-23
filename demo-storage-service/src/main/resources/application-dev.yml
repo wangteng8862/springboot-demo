@@ -1,0 +1,146 @@
+server:
+  port: 8004
+
+dubbo:
+  # 配置服务信息
+  application:
+    id: storage-provider
+    name: storage-provider
+    # 禁用QOS同一台机器可能会有端口冲突现象
+    qos-enable: false
+    qos-accept-foreign-ip: false
+  # 配置注册中心
+  registry:
+    id: storage-registry
+    address: nacos://127.0.0.1:8848
+  # 设置协议-协议由提供方指定消费方被动接受
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.kevin.demo.dubbo.service.impl
+  provider:
+    version: 1.0.0
+
+spring:
+  main:
+    # 解决Bean重复定义问题
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    ## 配置中心
+    orchestration:
+      # 名字
+      name: kevin-demo-storage-ds
+      # 覆盖配置中心的配置，以本地为准
+      overwrite: true
+      registry:
+        type: zookeeper
+        # 名字随便起一个，这是我们这个集群的名称，其他的集群可以用这个也可以用自己单独的，作为资源隔离
+        namespace: kevin-demo-storage
+        server-lists: localhost:2181
+    props:
+      sql:
+        #设置sql是否展示
+        show: true
+    datasource:
+      #数据库名称（可以与数据库中的库名不一致）
+      names: ds0,ds1
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/storage?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: root
+        # 数据库连接池的最小连接数
+        min-idle: 5
+        # 初始化连接数
+        initial-size: 5
+        # 最大连接数
+        max-total: 5
+        max-wait-millis: 200s
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/storage1?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+        username: root
+        password: root
+        # 数据库连接池的最小连接数
+        min-idle: 5
+        # 初始化连接数
+        initial-size: 5
+        # 最大连接数
+        max-total: 5
+        max-wait-millis: 200s
+    sharding:
+      #分库策略
+      default-database-strategy:
+        inline:
+          #根据id取模决定去那个库
+          sharding-column: id
+          algorithm-expression: ds$->{id % 2}
+      tables:
+        #逻辑表名，这里的account为逻辑表名，storage_0,storage_1为实际表
+        storage:
+          actual-data-nodes: ds$->{0..1}.storage_$->{0..1}
+          table-strategy:
+            #根据id取模决定去那个表
+            inline:
+              sharding-column: id
+              algorithm-expression: storage_$->{id % 2}
+          key-generator:
+            #id使用雪花算法
+            column: id
+            #雪花算法
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 123
+
+mybatis:
+  mapper-locations:
+    classpath*:com/kevin/demo/dao/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage:
+    com.kevin.demo.entity
+
+#showSql
+logging:
+  config : classpath:config/log/log4j2.xml
+
+nacos:
+  service-address: 127.0.0.1
+  port: 8848
+
+seata:
+  enabled: true
+  application-id: kevin-demo-storage-seata
+  tx-service-group: kevin-demo-group
+  enable-auto-data-source-proxy: true
+  service:
+    vgroupMapping:
+      kevin-demo-group: "default"
+    grouplist:
+      - localhost:8091
+      #- localhost:8092
+      #- xxxxxxx.8093
+  config:
+    type: nacos
+    #file:
+    #  name: file.conf 【namespace: seata-config-1】
+    nacos:
+      namespace: "public"
+      serverAddr: localhost:8848
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+  registry:
+    type: nacos
+    nacos:
+      #与seata server的registry.conf的nacos名字相同
+      application: seata-server
+      server-addr: localhost:8848
+      namespace:
+      userName: "nacos"
+      password: "nacos"
+

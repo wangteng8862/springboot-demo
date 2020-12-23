@@ -1,0 +1,53 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+       <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"-->
+       <!--xmlns:tx="http://www.springframework.org/schema/tx"-->
+       <!--xsi:schemaLocation="-->
+        <!--http://www.springframework.org/schema/beans-->
+        <!--http://www.springframework.org/schema/beans/spring-beans.xsd-->
+        <!--http://www.springframework.org/schema/tx-->
+        <!--http://www.springframework.org/schema/tx/spring-tx.xsd-->
+        <!--http://www.springframework.org/schema/aop-->
+        <!--http://www.springframework.org/schema/aop/spring-aop.xsd">-->
+
+    <!--<bean id="txManager"-->
+          <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dynamicDataSource"></property>-->
+    <!--</bean>-->
+
+    <!--<aop:aspectj-autoproxy expose-proxy="true"/>-->
+
+    <!--<tx:advice id="txAdvice" transaction-manager="txManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*NoTransaction" propagation="NOT_SUPPORTED"/>-->
+            <!--<tx:method name="*NewTransaction" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception,java.lang.Error"/>-->
+            <!--<tx:method name="*" propagation="REQUIRED" read-only="true"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+    <!--<aop:config>-->
+        <!--<aop:advisor id="managerTxBiz1" advice-ref="txAdvice" pointcut="execution(* com.kevin.demo.*..*Service*.*(..))"/>-->
+    <!--</aop:config>-->
+
+    <!--<bean id="determineDataSourceAspect" class="com.kevin.demo.common.data.datasource.aspect.DetermineDataSourceAspect">-->
+        <!--<property name="useSlaveDataSourceMethodPrefixes">-->
+            <!--<list>-->
+                <!--<value>select</value>-->
+                <!--<value>list</value>-->
+                <!--<value>query</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<aop:config>-->
+        <!--<aop:aspect id="dataSourceAspect" order="-2147483647" ref="determineDataSourceAspect">-->
+            <!--&lt;!&ndash;<aop:pointcut id="serviceMethodPointcut" expression="execution(* com.geekplus.venus.device.repository.service..*Service*.*(..))"/>&ndash;&gt;-->
+            <!--<aop:pointcut id="serviceMethodPointcut" expression="execution(* com.geekplus.venus.common.i18n..*Service*.*(..))"/>-->
+            <!--&lt;!&ndash; or execution(* com.geekplus.venus.device.repository.service..*Service*.*(..))-->
+            <!--or execution(* com.baomidou.mybatisplus.extension.service..*Service*.*(..))"/> &ndash;&gt;-->
+            <!--&lt;!&ndash; <aop:before method="before" pointcut-ref="serviceMethodPointcut" /> &ndash;&gt;-->
+            <!--&lt;!&ndash; <aop:after  method="after"  pointcut-ref="serviceMethodPointcut" /> &ndash;&gt;-->
+            <!--<aop:around method="around" pointcut-ref="serviceMethodPointcut"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+<!--</beans>-->
