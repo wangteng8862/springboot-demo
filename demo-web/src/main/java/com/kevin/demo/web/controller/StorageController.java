@@ -27,7 +27,7 @@ import java.util.List;
 public class StorageController {
     private static final Logger logger = LoggerFactory.getLogger(StorageController.class);
 
-    @Reference(group = "storage_group", version = "1.0.0")
+    @Reference(group = "storage_group", version = "1.0.0", retries = 0)
     private StorageDubboService storageService;
 
     @ListUrl

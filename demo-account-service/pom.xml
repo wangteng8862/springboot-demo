@@ -55,17 +55,21 @@
         </dependency>
 
         <!--==========第三方插件==========-->
-        <!--mysql-->
+        <!--lombok-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <!-- druid -->
+        <!--<dependency>-->
+        <!--<groupId>com.alibaba</groupId>-->
+        <!--<artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <artifactId>druid</artifactId>
         </dependency>
 
         <!--mybatis-->
@@ -74,102 +78,58 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- sharding -->
+        <!--mysql-->
         <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-orchestration-reg-zookeeper-curator</artifactId>
-            <version>${sharding-sphere.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-jdbc-orchestration-spring-boot-starter</artifactId>
-            <version>${sharding-sphere.version}</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!-- seata -->
+        <!-- netty -->
         <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>sharding-transaction-base-seata-at</artifactId>
-            <version>${sharding-sphere.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-all</artifactId>
-            <version>${seata.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-            <version>2.1.1.RELEASE</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.42.Final</version>
         </dependency>
 
         <!-- dubbo -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>${dubbo-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>dubbo</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
-            <version>${dubbo.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo-config-spring</artifactId>
-            <version>${dubbo.version}</version>
-        </dependency>
-
-        <!-- nacos -->
-        <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-config-spring-boot-starter</artifactId>
-            <version>${nacos-config-spring-boot.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>nacos-client</artifactId>
-                    <groupId>com.alibaba.nacos</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.cloud</groupId>-->
-        <!--<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<artifactId>nacos-client</artifactId>-->
-        <!--<groupId>com.alibaba.nacos</groupId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-discovery-spring-boot-starter</artifactId>
-            <version>0.2.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
-            <version>${nacos-client.verison}</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo-registry-nacos</artifactId>
-            <version>${dubbo-registry-nacos.version}</version>
+        </dependency>
+
+        <!--shardingsphere-->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-orchestration-reg-zookeeper-curator</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-orchestration-spring-boot-starter</artifactId>
+            <version>4.0.1</version>
         </dependency>
 
         <!--<dependency>-->
-        <!--<groupId>org.yaml</groupId>-->
-        <!--<artifactId>snakeyaml</artifactId>-->
-        <!--<version>1.27</version>-->
+        <!--<groupId>org.apache.shardingsphere</groupId>-->
+        <!--<artifactId>sharding-orchestration-reg-nacos</artifactId>-->
+        <!--<version>4.1.1</version>-->
         <!--</dependency>-->
 
         <dependency>
@@ -177,12 +137,6 @@
             <artifactId>antlr4-runtime</artifactId>
             <version>4.7.1</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.apache.curator</groupId>-->
-        <!--<artifactId>curator-client</artifactId>-->
-        <!--<version>3.3.0</version>-->
-        <!--</dependency>-->
 
     </dependencies>
 

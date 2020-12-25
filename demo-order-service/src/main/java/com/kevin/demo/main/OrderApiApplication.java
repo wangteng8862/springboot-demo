@@ -1,26 +1,18 @@
 package com.kevin.demo.main;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.alibaba.nacos.spring.context.annotation.discovery.EnableNacosDiscovery;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan({
-        "com.kevin.demo"
-})
-@MapperScan({
-        "com.kevin.demo.dao*"})
 @SpringBootApplication(exclude = {
-        DruidDataSourceAutoConfigure.class,
         DataSourceAutoConfiguration.class
 })
+@ComponentScan(basePackages = "com.kevin")
+@MapperScan(basePackages = {"com.kevin.demo.dao"})
 @EnableDubbo
-@EnableNacosDiscovery
 public class OrderApiApplication {
 
     public static void main(String[] args) {

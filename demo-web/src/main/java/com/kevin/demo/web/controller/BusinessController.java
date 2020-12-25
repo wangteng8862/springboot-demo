@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusinessController {
     private static final Logger logger = LoggerFactory.getLogger(BusinessController.class);
 
-    @Reference(group = "business_group", version = "1.0.0")
+    @Reference(group = "business_group", version = "1.0.0", retries = 0)
     private BusinessDubboService businessService;
 
     @RequestMapping(value = "/buy", method = RequestMethod.GET)

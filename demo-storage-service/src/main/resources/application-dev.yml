@@ -112,35 +112,35 @@ nacos:
   service-address: 127.0.0.1
   port: 8848
 
-seata:
-  enabled: true
-  application-id: kevin-demo-storage-seata
-  tx-service-group: kevin-demo-group
-  enable-auto-data-source-proxy: true
-  service:
-    vgroupMapping:
-      kevin-demo-group: "default"
-    grouplist:
-      - localhost:8091
-      #- localhost:8092
-      #- xxxxxxx.8093
-  config:
-    type: nacos
-    #file:
-    #  name: file.conf 【namespace: seata-config-1】
-    nacos:
-      namespace: "public"
-      serverAddr: localhost:8848
-      group: SEATA_GROUP
-      userName: "nacos"
-      password: "nacos"
-  registry:
-    type: nacos
-    nacos:
-      #与seata server的registry.conf的nacos名字相同
-      application: seata-server
-      server-addr: localhost:8848
-      namespace:
-      userName: "nacos"
-      password: "nacos"
+#seata:
+#  enabled: true
+#  application-id: kevin-demo-storage-seata
+#  tx-service-group: kevin-demo-group
+#  enable-auto-data-source-proxy: true
+#  service:
+#    vgroupMapping:
+#      kevin-demo-group: "default"
+#    grouplist:
+#      - localhost:8091
+#      #- localhost:8092
+#      #- xxxxxxx.8093
+#  config:
+#    type: nacos
+#    #file:
+#    #  name: file.conf 【namespace: seata-config-1】
+#    nacos:
+#      namespace: "public"
+#      serverAddr: localhost:8848
+#      group: SEATA_GROUP
+#      userName: "nacos"
+#      password: "nacos"
+#  registry:
+#    type: nacos
+#    nacos:
+#      #与seata server的registry.conf的nacos名字相同
+#      application: seata-server
+#      server-addr: localhost:8848
+#      namespace:
+#      userName: "nacos"
+#      password: "nacos"
 

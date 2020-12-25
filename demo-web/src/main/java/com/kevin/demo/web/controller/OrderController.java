@@ -28,7 +28,7 @@ import java.util.List;
 public class OrderController {
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
-    @Reference(group = "order_group", version = "1.0.0")
+    @Reference(group = "order_group", version = "1.0.0", retries = 0)
     private OrderDubboService orderService;
 
     @ListUrl

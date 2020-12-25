@@ -9,7 +9,6 @@ import com.kevin.demo.dubbo.service.StorageDubboService;
 import com.kevin.demo.entity.Account;
 import com.kevin.demo.entity.Order;
 import com.kevin.demo.entity.Storage;
-import io.seata.spring.annotation.GlobalTransactional;
 
 /**
  * @Description:
@@ -31,7 +30,7 @@ public class BusinessDubboServiceImpl implements BusinessDubboService {
     private StorageDubboService storageService;
 
     @Override
-    @GlobalTransactional(timeoutMills = 300000, name = "kevin-demo-group", rollbackFor = Exception.class)
+//    @GlobalTransactional(timeoutMills = 300000, name = "kevin-demo-group", rollbackFor = Exception.class)
     public void buy() {
         Account account = new Account();
         account.setAmount(1L);

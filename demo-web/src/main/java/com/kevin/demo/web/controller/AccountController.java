@@ -27,7 +27,7 @@ import java.util.List;
 public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
-    @Reference(group = "account_group", version = "1.0.0")
+    @Reference(group = "account_group", version = "1.0.0", retries = 0)
     private AccountDubboService accountService;
 
     @ListUrl
