@@ -75,19 +75,45 @@ spring:
     sharding:
       #分库策略
       default-database-strategy:
-        inline:
-          #根据id取模决定去那个库
-          sharding-column: id
-          algorithm-expression: ds$->{id % 2}
+        #用于单分片键的标准分片场景
+        standard:
+          #分片列名称
+          shardingColumn: id
+          #精确分片算法类名称，用于=和IN。。该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
+          preciseAlgorithmClassName: com.kevin.demo.main.config.MyPreciseShardingAlgorithm
+          #范围分片算法类名称，用于BETWEEN，可选。。该类需实现RangeShardingAlgorithm接口并提供无参数的构造器
+#         rangeAlgorithmClassName:
+        #用于多分片键的  复合分片场景
+#       complex:
+          #分片列名称，多个列以逗号分隔
+#         shardingColumns:
+          #复合分片算法类名称。该类需实现ComplexKeysShardingAlgorithm接口并提供无参数的构造器
+#         algorithmClassName:
+#       inline:
+#         #根据id取模决定去那个库
+#         sharding-column: id
+#         algorithm-expression: ds$->{id % 2}
+        #Hint分片策略
+#       hint:
+          #Hint分片算法类名称。该类需实现HintShardingAlgorithm接口并提供无参数的构造器
+#         algorithmClassName:
+#        none: #不分片
       tables:
         #逻辑表名，这里的account为逻辑表名，storage_0,storage_1为实际表
         storage:
-          actual-data-nodes: ds$->{0..1}.storage_$->{0..1}
+#          actual-data-nodes: ds$->{0..1}.storage_$->{0..1}
+          actual-data-nodes: ds$->{0..1}.storage_0
           table-strategy:
-            #根据id取模决定去那个表
-            inline:
-              sharding-column: id
-              algorithm-expression: storage_$->{id % 2}
+            none: #不分片
+#            #根据id取模决定去那个表
+#            inline:
+#              sharding-column: id
+#              algorithm-expression: storage_$->{id % 2}
+#            standard:
+#              #分片列名称
+#              shardingColumn: id
+#              #精确分片算法类名称，用于=和IN。。该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
+#              preciseAlgorithmClassName: com.kevin.demo.main.config.MyPreciseShardingAlgorithm
           key-generator:
             #id使用雪花算法
             column: id
@@ -109,8 +135,9 @@ logging:
   config : classpath:config/log/log4j2.xml
 
 nacos:
-  service-address: 127.0.0.1
-  port: 8848
+  config:
+    server-addr: 127.0.0.1:8848
+    namespace: public
 
 #seata:
 #  enabled: true
