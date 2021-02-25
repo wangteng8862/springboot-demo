@@ -24,6 +24,8 @@
         <module>demo-storage-service</module>
         <module>demo-business-api</module>
         <module>demo-business-service</module>
+        <module>demo-module-api</module>
+        <module>demo-module-service</module>
         <module>demo-web</module>
     </modules>
 

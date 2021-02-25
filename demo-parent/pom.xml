@@ -13,11 +13,10 @@
 
     <artifactId>demo-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <description>demo parent</description>
-
-    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +39,7 @@
         <version.demo.order>1.0.0-SNAPSHOT</version.demo.order>
         <version.demo.storage>1.0.0-SNAPSHOT</version.demo.storage>
         <version.demo.business>1.0.0-SNAPSHOT</version.demo.business>
+        <version.demo.module>1.0.0-SNAPSHOT</version.demo.module>
 
         <!--==========geekplus内部包==========-->
         <version.optimus.common>1.0.10-RELEASE</version.optimus.common>
@@ -162,6 +162,16 @@
             <dependency>
                 <groupId>com.kevin</groupId>
                 <artifactId>demo-business-service</artifactId>
+                <version>${version.demo.business}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kevin</groupId>
+                <artifactId>demo-module-api</artifactId>
+                <version>${version.demo.business}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kevin</groupId>
+                <artifactId>demo-module-service</artifactId>
                 <version>${version.demo.business}</version>
             </dependency>
 

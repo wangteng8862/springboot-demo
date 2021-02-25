@@ -11,18 +11,18 @@
         <relativePath>../demo-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>demo-web</artifactId>
+    <artifactId>demo-module-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <name>${project.artifactId}</name>
-    <description>demo-web</description>
+    <description>demo-module-service</description>
 
     <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <mainclass>com.kevin.demo.web.main.WebApplication</mainclass>
+        <mainclass>com.kevin.demo.main.ModuleApiApplication</mainclass>
     </properties>
 
     <dependencies>
@@ -56,31 +56,15 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
-        <!--==========venus内部包==========-->
+        <!--==========demo内部包==========-->
         <dependency>
             <groupId>com.kevin</groupId>
-            <artifactId>demo-account-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kevin</groupId>
-            <artifactId>demo-order-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kevin</groupId>
-            <artifactId>demo-storage-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.kevin</groupId>
-            <artifactId>demo-business-api</artifactId>
+            <artifactId>demo-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kevin</groupId>
             <artifactId>demo-module-api</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.kevin</groupId>-->
-            <!--<artifactId>demo-common</artifactId>-->
-        <!--</dependency>-->
 
         <!--==========geekplus内部包==========-->
         <dependency>
@@ -89,6 +73,42 @@
         </dependency>
 
         <!--==========第三方插件==========-->
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- druid -->
+        <!--<dependency>-->
+        <!--<groupId>com.alibaba</groupId>-->
+        <!--<artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+
+        <!--mybatis-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- netty -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.42.Final</version>
+        </dependency>
+
         <!-- dubbo -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
@@ -111,13 +131,43 @@
             <artifactId>dubbo-registry-nacos</artifactId>
         </dependency>
 
-        <!-- netty -->
+        <!--shardingsphere-->
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.42.Final</version>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-orchestration-reg-zookeeper-curator</artifactId>
+            <version>4.0.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-orchestration-spring-boot-starter</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.apache.shardingsphere</groupId>-->
+        <!--<artifactId>sharding-orchestration-reg-nacos</artifactId>-->
+        <!--<version>4.1.1</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+
+        <!-- nacos -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>0.2.1</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.cloud</groupId>-->
+            <!--<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+            <!--<version>0.2.1.RELEASE</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.geekplus.optimus.common.entity.APIModel;
 import com.geekplus.optimus.common.util.CommonUtil;
 import com.geekplus.optimus.common.util.i18n.Lang;
-import com.kevin.demo.dubbo.service.BusinessDubboService;
+import com.kevin.demo.dubbo.service.ModuleDubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/business")
-public class BusinessController {
-    private static final Logger logger = LoggerFactory.getLogger(BusinessController.class);
+@RequestMapping("/module")
+public class ModuleController {
+    private static final Logger logger = LoggerFactory.getLogger(ModuleController.class);
 
-    @Reference(group = "business_group", version = "1.0.0", retries = 0)
-    private BusinessDubboService businessService;
+    @Reference(group = "module_group", version = "1.0.0", retries = 0)
+    private ModuleDubboService moduleDubboService;
 
-    @RequestMapping(value = "/buy", method = RequestMethod.GET)
-    public APIModel query() {
+    @RequestMapping(value = "/buy", method = RequestMethod.POST)
+    public APIModel buy(Long warehouseId, Boolean flag) {
         APIModel model = new APIModel();
         try {
-            businessService.buy();
+            moduleDubboService.buySomeone(warehouseId, flag);
             model.set(CommonUtil.RETURN_CODE_ZERO, CommonUtil.RETURN_MSG_SUCCESS, null);
         } catch (Exception e) {
             // 运行异常

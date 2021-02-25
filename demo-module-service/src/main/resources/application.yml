@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: dev
+  main:
+    # 解决Bean重复定义问题
+    allow-bean-definition-overriding: true
+
+#(下面的配置中只需要吧对应的data-ids、group、data-id 、server-addr、namespace修改为对应数据)#
+
+#### -----------------静态文件配置(启动的时候最优先加载 log-enable: true)-------------- ##
+#nacos:
+#  config:
+#    bootstrap:
+#      log-enable: false # 支持日志级别的加载时机（如果需要集成dubbo，请使用此配置加载时机）
+#      enable: true # 设置参数nacos.config.bootstrap.enable=true，开启配置预加载功能
+#    max-retry: 10 # 主配置 最大重试次数
+#    auto-refresh: false # 主配置 是否开启自动刷新 (false:不监听属性变化,true:监听属性变化,但是对应的属性注解上也必须设置autoRefreshed = true才可以实时更新)
+#    config-retry-time: 3000 # 主配置 重试时间
+#    config-long-poll-timeout: 30000 # 主配置 配置监听长轮询超时时间
+#    enable-remote-sync-config: false # 主配置 开启注册监听器预加载配置服务（除非特殊业务需求，否则不推荐打开该参数）
+#    remote-first: false #允许nacos上的配置优先于本地配置; 意思是：如果nacos配置了某属性，然后在本地的application.yml配置了相同属性；那么会以nacos配置的优先;否则是本地的优先
+#    data-ids: applocation-dev.yaml # 主配置 data-ids  (可以配置多个,如果多个配置文件中有相同的 属性 则优先取最前面的值)
+#    group: DEFAULT_GROUP # 主配置 group-id
+#    type: yaml # 主配置 配置文件类型
+#    server-addr: 127.0.0.1:8848
+#    namespace:  # 命名空间
+#    name: nacos
+#    password: nacos
