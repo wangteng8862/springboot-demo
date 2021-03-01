@@ -1,6 +1,6 @@
 package com.kevin.demo.service.impl;
 
-import com.kevin.demo.dao.StorageMapper;
+import com.kevin.demo.dao.storage.StorageMapper;
 import com.kevin.demo.entity.Storage;
 import com.kevin.demo.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ public class StorageServiceImpl implements StorageService {
         return storageMapper.query();
     }
 
-    @Transactional
     @Override
     public void add(Storage storage) {
         storageMapper.insertSelective(storage);

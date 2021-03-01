@@ -4,10 +4,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.kevin.demo.dubbo.service.ModuleDubboService;
 import com.kevin.demo.entity.Order;
 import com.kevin.demo.entity.Storage;
-import com.kevin.demo.main.config.NacosConfigBean;
 import com.kevin.demo.service.OrderService;
 import com.kevin.demo.service.StorageService;
-import org.apache.shardingsphere.transaction.annotation.ShardingTransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +22,7 @@ public class ModuleDubboServiceImpl implements ModuleDubboService {
     private OrderService orderService;
     @Autowired
     private StorageService storageService;
-    @Autowired
-    private NacosConfigBean configBean;
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void buySomeone(Long warehouseId, Boolean flag) {
 
@@ -35,9 +30,6 @@ public class ModuleDubboServiceImpl implements ModuleDubboService {
 
         Order order = new Order();
         order.setAmount(10L);
-        order.setBizId(configBean.getBizOrder());
-        order.setWarehouseId(warehouseId);
-        order.setShardingKey(getShardingKey(warehouseId, configBean.getBizOrder()));
         order.setUserId(userId);
 
         orderService.addNewTransaction(order);
@@ -48,15 +40,9 @@ public class ModuleDubboServiceImpl implements ModuleDubboService {
 
         Storage storage = new Storage();
         storage.setAmount(10L);
-        storage.setBizId(configBean.getBizStorage());
-        storage.setWarehouseId(warehouseId);
-        storage.setShardingKey(getShardingKey(warehouseId, configBean.getBizStorage()));
         storage.setUserId(userId);
 
         storageService.add(storage);
     }
 
-    private String getShardingKey(Long warehouseId, Long bizOrder) {
-        return warehouseId.toString().concat("_").concat(bizOrder.toString());
-    }
 }

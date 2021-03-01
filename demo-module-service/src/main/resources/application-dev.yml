@@ -32,119 +32,37 @@ spring:
   main:
     # 解决Bean重复定义问题
     allow-bean-definition-overriding: true
-  shardingsphere:
-    ## 配置中心
-    orchestration:
-      # 名字
-      name: kevin-demo-module-ds
-      # 覆盖配置中心的配置，以本地为准
-      overwrite: true
-      registry:
-        type: zookeeper
-        # 名字随便起一个，这是我们这个集群的名称，其他的集 群可以用这个也可以用自己单独的，作为资源隔离
-        namespace: kevin-demo-module
-        server-lists: localhost:2181
-    props:
-      sql:
-        #设置sql是否展示
-        show: true
-    datasource:
-      #数据库名称（可以与数据库中的库名不一致）
-      names: storage1,storage2,order1,order2
-      storage1:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/storage_bj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-        username: root
-        password: root
-        # 数据库连接池的最小连接数
-        min-idle: 5
-        # 初始化连接数
-        initial-size: 5
-        # 最大连接数
-        max-total: 5
-        max-wait-millis: 200s
-      storage2:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/storage_tj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-        username: root
-        password: root
-        # 数据库连接池的最小连接数
-        min-idle: 5
-        # 初始化连接数
-        initial-size: 5
-        # 最大连接数
-        max-total: 5
-        max-wait-millis: 200s
-      order1:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/order_bj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-        username: root
-        password: root
-        # 数据库连接池的最小连接数
-        min-idle: 5
-        # 初始化连接数
-        initial-size: 5
-        # 最大连接数
-        max-total: 5
-        max-wait-millis: 200s
-      order2:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/order_tj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
-        username: root
-        password: root
-        # 数据库连接池的最小连接数
-        min-idle: 5
-        # 初始化连接数
-        initial-size: 5
-        # 最大连接数
-        max-total: 5
-        max-wait-millis: 200s
-    sharding:
-      #分库策略
-      default-database-strategy:
-        #用于单分片键的标准分片场景
-        standard:
-          #分片列名称
-          shardingColumn: sharding_key
-          #精确分片算法类名称，用于=和IN。。该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
-          preciseAlgorithmClassName: com.kevin.demo.main.config.MyPreciseShardingAlgorithm
-      defaultTableStrategy:
-        none:
-      default-key-generator:
-        type: SNOWFLAKE
-        column: id
-      tables:
-        storage:
-          actual-data-nodes: storage$->{1..2}.storage
-          table-strategy:
-            none: #不分片
-          database-strategy:
-            standard:
-              #分片列名称
-              shardingColumn: sharding_key
-              #精确分片算法类名称，用于=和IN。。该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
-              preciseAlgorithmClassName: com.kevin.demo.main.config.MyPreciseShardingAlgorithm
-        order:
-          actual-data-nodes: order$->{1..2}.order
-          table-strategy:
-            none: #不分片
-          database-strategy:
-            standard:
-              #分片列名称
-              shardingColumn: sharding_key
-              #精确分片算法类名称，用于=和IN。。该类需实现PreciseShardingAlgorithm接口并提供无参数的构造器
-              preciseAlgorithmClassName: com.kevin.demo.main.config.MyPreciseShardingAlgorithm
-
-mybatis:
-  mapper-locations:
-    classpath*:com/kevin/demo/dao/*Mapper.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage:
-    com.kevin.demo.entity
+  datasource:
+    order:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/order_bj?setUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      borrowConnectionTimeout: 30
+      loginTimeout: 30
+      maintenanceInterval: 60
+      maxIdleTime: 60
+      maxLifetime: 20000
+      maxPoolSize: 25
+      minPoolSize: 3
+      uniqueResourceName: orderDataSource
+      testQuery: select 1
+    storage:
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/storage_bj?setUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+      borrowConnectionTimeout: 30
+      loginTimeout: 30
+      maintenanceInterval: 60
+      maxIdleTime: 60
+      maxLifetime: 20000
+      maxPoolSize: 25
+      minPoolSize: 3
+      uniqueResourceName: storageDataSource
+      testQuery: select 1
 
 logging:
   config : classpath:config/log/log4j2.xml

@@ -1,4 +1,4 @@
-package com.kevin.demo.dao;
+package com.kevin.demo.dao.order;
 
 
 import com.kevin.demo.entity.Order;

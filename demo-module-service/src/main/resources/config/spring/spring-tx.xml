@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--================配置atomikos事务管理器========================-->
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init"
+          destroy-method="close">
+        <property name="forceShutdown" value="false"/>
+    </bean>
+
+    <!--============配置spring的JtaTransactionManager，底层委派给atomikos进行处理===============-->
+    <bean id="jtaTransactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManager" ref="atomikosTransactionManager"/>
+    </bean>
+
+    <!--配置spring声明式事务管理器-->
+    <tx:annotation-driven transaction-manager="jtaTransactionManager"/>
+
+    <tx:advice id="txAdvice" transaction-manager="jtaTransactionManager">
+        <tx:attributes>
+            <tx:method name="*NoTransaction" propagation="NOT_SUPPORTED"/>
+            <tx:method name="*NewTransaction" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception,java.lang.Error"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception,java.lang.Error"/>
+            <tx:method name="buy*" propagation="REQUIRED" rollback-for="java.lang.Exception,java.lang.Error"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:advisor id="managerTxBiz1" advice-ref="txAdvice" pointcut="execution(* com.kevin.demo.*..*Service*.*(..))"/>
+    </aop:config>
+
+</beans>

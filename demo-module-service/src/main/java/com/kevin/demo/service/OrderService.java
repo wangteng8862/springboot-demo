@@ -9,5 +9,5 @@ public interface OrderService {
 
     List<Order> query();
 
-    void add(Order order);
+    void addNewTransaction(Order order);
 }
